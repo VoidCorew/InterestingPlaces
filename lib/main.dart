@@ -164,15 +164,25 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> openInMaps(double lat, double lon) async {
-    final googleMapsUrl = Uri.encodeFull(
+    // final googleMapsUrl = Uri.encodeFull(
+    //   'https://www.google.com/maps/search/?api=1&query=$lat,$lon',
+    // );
+    final Uri googleMapsUri = Uri.parse(
       'https://www.google.com/maps/search/?api=1&query=$lat,$lon',
     );
-    if (await canLaunchUrl(Uri.parse(googleMapsUrl))) {
-      await launchUrl(Uri.parse(googleMapsUrl));
+    // if (await canLaunchUrl(Uri.parse(googleMapsUrl))) {
+    //   await launchUrl(Uri.parse(googleMapsUrl));
+    // } else {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     SnackBar(content: Text('Не удалось открыть карту', style: font)),
+    //   );
+    // }
+    if (await canLaunchUrl(googleMapsUri)) {
+      await launchUrl(googleMapsUri, mode: LaunchMode.externalApplication);
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Не удалось открыть карту', style: font)),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Не удалось открыть карту')));
     }
   }
 
